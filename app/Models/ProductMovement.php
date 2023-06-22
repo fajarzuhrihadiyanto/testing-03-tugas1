@@ -9,6 +9,7 @@ use DateTime;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
 use function array_flip;
 use function array_key_exists;
@@ -37,9 +38,23 @@ class ProductMovement extends Model
         'id', 'user_id', 'product_id', 'direction', 'quantity', 'created_at'
     ];
 
+    public static function persist(self $product_movement): void
+    {
+        DB::table($product_movement->table)->upsert(
+            [
+                'id' => $product_movement->getId(),
+                'user_id' => $product_movement->getUserId(),
+                'product_id' => $product_movement->getProductId(),
+                'direction' => self::DIRECTION($product_movement->getDirection()),
+                'quantity' => $product_movement->getQuantity(),
+                'created_at' => $product_movement->getCreatedAt()->getTimestamp(),
+            ], 'id'
+        );
+    }
+
     public const DIRECTION = [
-        'out' => 0,
-        'in' => 1,
+        'out' => '0',
+        'in' => '1',
     ];
 
     /**

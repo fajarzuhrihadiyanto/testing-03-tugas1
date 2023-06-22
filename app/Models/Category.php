@@ -6,14 +6,27 @@ use App\Models\Shared\Helper;
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Category extends Model
 {
     use HasFactory, Helper;
 
     protected $fillable = [
-        'name', 'shop_id', 'created_at'
+        'id', 'name', 'shop_id', 'created_at'
     ];
+
+    public static function persist(self $category)
+    {
+        DB::table($category->table)->upsert(
+            [
+                'id' => $category->getId(),
+                'shop_id' => $category->getShopId(),
+                'name' => $category->getName(),
+                'created_at' => $category->getCreatedAt()->getTimestamp()
+            ], 'id'
+        );
+    }
 
     protected $casts = [
         'created_at' => 'datetime'

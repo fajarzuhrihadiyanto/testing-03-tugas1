@@ -40,13 +40,15 @@ class MarketplaceOrmTest extends TestCase
      * @param Marketplace $marketplace
      * @return void
      */
-    public function testCanFind(Marketplace $marketplace)
+    public function testCanFind(Marketplace $marketplace): void
     {
         $found_marketplace = Marketplace::where('id', $marketplace->getId())->first();
         $this->assertTrue($marketplace->getId() == $found_marketplace->getId());
         $this->assertTrue($marketplace->getShopId() == $found_marketplace->getShopId());
         $this->assertTrue($marketplace->getName() == $found_marketplace->getName());
         $this->assertEqualsWithDelta($marketplace->getCreatedAt()->format('Y-m-d H:i:s'), $found_marketplace->getCreatedAt()->format('Y-m-d H:i:s'), 1, '');
+
+        $found_marketplace->delete();
 
     }
 

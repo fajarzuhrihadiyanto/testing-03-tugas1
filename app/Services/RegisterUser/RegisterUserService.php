@@ -6,6 +6,7 @@ use App\Exceptions\ExpectedException;
 use App\Models\User;
 use App\Services\SendEmailOtp\SendEmailOtpRequest;
 use App\Services\SendEmailOtp\SendEmailOtpService;
+use Date;
 use Hash;
 
 class RegisterUserService
@@ -33,6 +34,7 @@ class RegisterUserService
         $user->setEmail($request->getEmail());
         $user->setPassword(Hash::make($request->getUnhashedPassword()));
         $user->setImage('user/default.png');
+        $user->setEmailVerifiedAt(Date::now());
         $user->persist();
         $user = $this->otp_service->execute(new SendEmailOtpRequest($user->getEmail()));
         return $user->getId();

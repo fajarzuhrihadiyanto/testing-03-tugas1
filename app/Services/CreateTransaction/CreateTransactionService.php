@@ -4,7 +4,7 @@ namespace App\Services\CreateTransaction;
 
 use App\Exceptions\ExpectedException;
 use App\Jobs\AddProductMovementJobs;
-use App\Models\Marketplace;
+use App\Models\Shop;
 use App\Models\Product;
 use App\Models\ProductMovement;
 use App\Models\Transaction;
@@ -21,7 +21,7 @@ class CreateTransactionService
     {
         $price_total = 0;
         $item_payload = [];
-        $marketplace = Marketplace::where('id', $request->getMarketplaceId())->first();
+        $marketplace = Shop::where('id', $request->getMarketplaceId())->first();
         if (!$marketplace) ExpectedException::throw("Marketplace doesn't exists", 2045);
         foreach ($request->getItems() as $item) {
             $product = Product::where('id', $item->getProductId())->first();

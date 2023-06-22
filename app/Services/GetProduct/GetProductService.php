@@ -2,7 +2,7 @@
 
 namespace App\Services\GetProduct;
 
-use App\Models\Marketplace;
+use App\Models\Shop;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductMovement;

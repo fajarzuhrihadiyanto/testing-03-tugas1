@@ -18,7 +18,6 @@ class CreateShopService
     {
         if (Shop::where('user_id', $user->getId())->where('name', $request->getName())->exists())
             ExpectedException::throw("Existing shop with the same name", 2041);
-
         $id = 'shop/default.png';
         if ($request->getImage()) {
             $id = Storage::disk('public')->put("shop/", $request->getImage());

@@ -26,7 +26,7 @@ class Shop extends Model
 
     public static function persist(self $shop)
     {
-        DB::table((new self())->table)->upsert(
+        DB::table($shop->table)->upsert(
             [
                 'id' => $shop->getId(),
                 'user_id' => $shop->getUserId(),
@@ -70,12 +70,12 @@ class Shop extends Model
     }
 
     /**
-     * @return Collection<Marketplace>
+     * @return Collection<Shop>
      */
     public function marketplace(): Collection
     {
-        $res = $this->hasMany(Marketplace::class, 'shop_id', 'id')->get();
-        return $res->filter(fn ($res) => $res instanceof Marketplace);
+        $res = $this->hasMany(Shop::class, 'shop_id', 'id')->get();
+        return $res->filter(fn ($res) => $res instanceof Shop);
     }
 
     /**

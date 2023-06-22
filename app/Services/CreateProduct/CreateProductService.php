@@ -3,7 +3,7 @@
 namespace App\Services\CreateProduct;
 
 use App\Exceptions\ExpectedException;
-use App\Models\Marketplace;
+use App\Models\Shop;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\Shop;

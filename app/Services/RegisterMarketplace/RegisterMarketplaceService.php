@@ -3,7 +3,6 @@
 namespace App\Services\RegisterMarketplace;
 
 use App\Exceptions\ExpectedException;
-use App\Models\Marketplace;
 use App\Models\Shop;
 use App\Models\User;
 use Carbon\Carbon;
@@ -21,7 +20,7 @@ class RegisterMarketplaceService
         if (!Shop::where('user_id', $user->getId())->where('id', $request->getShopId())->exists())
             ExpectedException::throw("shop not found", 2042);
 
-        Marketplace::persist(new Marketplace([
+        Shop::persist(new Shop([
             'id' => null,
             'shop_id' => $request->getShopId(),
             'name' => $request->getName(),
